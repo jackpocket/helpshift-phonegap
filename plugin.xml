@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-helpshift-phonegap" version="0.0.4">
+   <name>HelpshiftPhonegap</name>
+   <js-module name="HelpshiftPhonegap" src="www/HelpshiftPhonegap.js">
+      <clobbers target="cordova.plugins.Helpshift" />
+   </js-module>
+   <platform name="ios">
+      <config-file parent="/*" target="config.xml">
+         <feature name="HelpshiftPhonegap">
+            <param name="ios-package" value="HelpshiftPhonegap" />
+         </feature>
+      </config-file>
+      <source-file src="src/ios/HelpshiftPhonegap.swift" />
+   </platform>
+</plugin>
