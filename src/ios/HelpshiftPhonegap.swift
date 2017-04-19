@@ -74,9 +74,11 @@
         var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
-        
-        HelpshiftSupport.showConversation(self.viewController)
-        
+
+        let options = command.arguments[0] as? [AnyHashable: Any]
+
+        HelpshiftSupport.showConversation(self.viewController, withOptions: options)
+
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Show Conversation Success")
         
         self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)

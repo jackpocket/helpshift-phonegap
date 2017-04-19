@@ -21,7 +21,7 @@ exports.initialize = function (arg0, success, error) {
     }, function (e) {
         console.error('HelpshiftPhonegap.initialize() error', arguments);
         if (error) {
-            error.apply(success, arguments);
+            error.apply(error, arguments);
         }
     }, 'HelpshiftPhonegap', 'setup', [arg0]);
 };
@@ -36,7 +36,7 @@ exports.showConversation = function (arg0, success, error) {
     }, function (e) {
         console.error('HelpshiftPhonegap.showConversation() error', arguments);
         if (error) {
-            error.apply(success, arguments);
+            error.apply(error, arguments);
         }
     }, 'HelpshiftPhonegap', 'showConversation', [arg0]);
 };
@@ -51,7 +51,7 @@ exports.showFAQs = function (arg0, success, error) {
     }, function (e) {
         console.error('HelpshiftPhonegap.showFAQs() error', arguments);
         if (error) {
-            error.apply(success, arguments);
+            error.apply(error, arguments);
         }
     }, 'HelpshiftPhonegap', 'showFAQs', [arg0]);
 };
@@ -67,7 +67,15 @@ exports.showFAQs = function (arg0, success, error) {
 * }
 */
 exports.login = function (user, success, error) {
-    console.log('login', user);
+    if (!(user.id && user.name && user.email)) {
+        throw new Error('helpshiftPhonegap.login() User invalid', user);
+    }
+
+    var helpshiftUser = {
+        id: String(user.id),
+        name: String(user.name),
+        email: String(user.email),
+    }
 
     // validate arg0 to the type
     exec(function () {
@@ -78,9 +86,9 @@ exports.login = function (user, success, error) {
     }, function (e) {
         console.error('HelpshiftPhonegap.login() error', arguments);
         if (error) {
-            error.apply(success, arguments);
+            error.apply(error, arguments);
         }
-    }, 'HelpshiftPhonegap', "login", [user]);
+    }, 'HelpshiftPhonegap', "login", [helpshiftUser]);
 };
 
 /**
@@ -97,7 +105,7 @@ exports.logout = function (user, success, error) {
     }, function (e) {
         console.error('HelpshiftPhonegap.logout() error', arguments);
         if (error) {
-            error.apply(success, arguments);
+            error.apply(error, arguments);
         }
     }, 'HelpshiftPhonegap', "logout", []);
 };
