@@ -110,9 +110,9 @@ exports.logout = function (user, success, error) {
     }, 'HelpshiftPhonegap', "logout", []);
 };
 
-exports.login = function (user, success, error) {
+exports.setName = function (user, success, error) {
     if (!(user.name)) {
-        throw new Error('helpshiftPhonegap.login() User invalid', user);
+        throw new Error('helpshiftPhonegap.setName() User invalid', user);
     }
 
     var helpshiftUser = { name: String(user.name) }
