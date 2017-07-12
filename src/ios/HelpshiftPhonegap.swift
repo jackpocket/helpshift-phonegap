@@ -12,13 +12,13 @@
         var apiKey = ""
         var domainName = ""
         var appID = ""
-        
+
         init(_ args: Any) throws {
             guard let args = args as? [String:String] else { throw HelpshiftPhonegap.Errors.Empty }
             guard let apiKey = args["apiKey"] else { throw HelpshiftPhonegap.Errors.Incomplete }
             guard let domainName =  args["domainName"] else { throw HelpshiftPhonegap.Errors.Incomplete }
             guard let appID = args["appID"] else { throw HelpshiftPhonegap.Errors.Incomplete }
-            
+
             self.apiKey = apiKey
             self.domainName = domainName
             self.appID = appID
@@ -42,12 +42,12 @@
             self.email = email
         }
     }
-    
+
     func setup(_ command: CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
-        
+
         if initialized == true {
             pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "HelpshfitPhonegap setup")
             self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
@@ -62,11 +62,11 @@
             domainName: config.domainName,
             appID: config.appID
         );
-        
+
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "HelpshfitPhonegap setup")
-        
+
         self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
-        
+
         initialized = true
     }
 
@@ -80,7 +80,7 @@
         HelpshiftSupport.showConversation(self.viewController, withOptions: options)
 
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "Show Conversation Success")
-        
+
         self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
     }
 
@@ -88,11 +88,11 @@
         var pluginResult = CDVPluginResult(
             status: CDVCommandStatus_ERROR
         )
-        
+
         HelpshiftSupport.showFAQs(self.viewController)
-        
+
         pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "show FAQs Success")
-        
+
         self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
     }
 
@@ -133,5 +133,28 @@
         self.commandDelegate?.send(pluginResult, callbackId: command.callbackId)
 
         print("User logged out")
+    }
+
+    func setName(_ command: CDVInvokedUrlCommand) {
+        var pluginResult = CDVPluginResult(
+            status: CDVCommandStatus_ERROR
+        )
+
+        do {
+            let user = try HelpshiftUser(command.arguments[0])
+
+            print("HS Name Submitted: \(user.name)")
+
+            HelpshiftCore.setName(user.name)
+
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "\(user.name) set as name")
+
+            print("User name \(user.name) successfully set")
+
+        } catch {
+            print(error)
+
+            pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: error.localizedDescription)
+        }
     }
 }

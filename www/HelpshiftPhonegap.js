@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 /**
  * Initialize the Helpshift SDK like here: https://developers.helpshift.com/ios/getting-started/#initializing
- * 
+ *
  * @param {string} user {
  *   apiKey: string;
  *   domainName: string;
@@ -108,4 +108,25 @@ exports.logout = function (user, success, error) {
             error.apply(error, arguments);
         }
     }, 'HelpshiftPhonegap', "logout", []);
+};
+
+exports.login = function (user, success, error) {
+    if (!(user.name)) {
+        throw new Error('helpshiftPhonegap.login() User invalid', user);
+    }
+
+    var helpshiftUser = { name: String(user.name) }
+
+    // validate arg0 to the type
+    exec(function () {
+        console.log('HelpshiftPhonegap.setName() success', arguments);
+        if (success) {
+            success.apply(success, arguments);
+        }
+    }, function (e) {
+        console.error('HelpshiftPhonegap.setName() error', arguments);
+        if (error) {
+            error.apply(error, arguments);
+        }
+    }, 'HelpshiftPhonegap', "setName", [helpshiftUser]);
 };
