@@ -143,9 +143,9 @@
         do {
             let user = try HelpshiftUser(command.arguments[0])
 
-            print("HS Name Submitted: \(user.name)")
+            print("HS Name and email Submitted: \(user.name) \(user.email)")
 
-            HelpshiftCore.setName(user.name)
+            HelpshiftCore.setName(user.name, andEmail: user.email)
 
             pluginResult = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: "\(user.name) set as name")
 

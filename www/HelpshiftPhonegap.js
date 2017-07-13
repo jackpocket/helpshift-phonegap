@@ -111,11 +111,15 @@ exports.logout = function (user, success, error) {
 };
 
 exports.setName = function (user, success, error) {
-    if (!(user.name)) {
-        throw new Error('helpshiftPhonegap.setName() User invalid', user);
+    if (!(user.name && user.email && user.id)) {
+        throw new Error('helpshiftPhonegap.setName() User invalid. User should be: {id, name, email}', user);
     }
 
-    var helpshiftUser = { name: String(user.name) }
+    var helpshiftUser = {
+      name: String(user.name),
+      email: String(user.email),
+      id: String(user.id),
+    }
 
     // validate arg0 to the type
     exec(function () {
